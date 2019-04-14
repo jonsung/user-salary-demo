@@ -71,7 +71,7 @@ class UserController {
 	    	InputStreamReader isReader = new InputStreamReader(istream);
 	    	CSVReader csvReader = new CSVReader(isReader);
 	        String[] header = csvReader.readNext();
-	        if (header.length != 2) {
+	        if (header == null || header.length != 2) {
 	        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid header format");
 	        } else if (!header[0].trim().toLowerCase().equals("name") || 
 	        		   !header[1].trim().toLowerCase().equals("salary")){
