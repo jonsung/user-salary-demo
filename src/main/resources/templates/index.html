@@ -64,14 +64,14 @@
 	<div class="row">
 		<div class="col-md-6 offset-md-1">
 			<button id="getusers" class="btn btn-primary my-2">Get Users JSON</button>
-			<p id="usersjson"></p>
+			<pre id="usersjson"></pre>
 			<script>
 				// POST for text csv submission
 				$("#getusers").on("click", function(){
 					$.get({
 						url: "/users",
 						success: function(data){
-							$("#usersjson").text(JSON.stringify(data));
+							$("#usersjson").text(JSON.stringify(data, undefined, 2));
 						}
 					});
 				});
