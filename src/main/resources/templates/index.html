@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+    <title>User Salary Demo</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container-fluid">
+	<div>
+    <h3 class="m-3">User Salary Demo</h2>
+    </div>
+
+    <div class="row">
+    	<iframe  name="dummyframe" id="dummyframe" style="width:0; height:0; border:none;"></iframe>
+
+
+    	<div class="col-md-4 offset-md-1 my-4">
+	    	<form action="/users" method="post" enctype="multipart/form-data" target="dummyframe"> 
+		  			<div class="custom-file">
+			  			<label class="custom-file-label" for="btnUpload">CSV File Input</label>
+			  			<input  type="file" name="file" class="custom-file-input" id="btnUpload">
+			   			<button type="submit" class="btn btn-primary my-2">Upload File</button>
+			  		</div>
+			</form>
+		</div>
+
+		<div class="col-md-4 offset-md-1">
+		   	<textarea class="form-control" id="textcsv" rows="3"></textarea>
+		    <button id="textcsvsubmit" class="btn btn-primary my-2">Submit Text CSV</button>
+		</div>
+
+
+		<script>
+			// POST for text csv submission
+			$("#textcsvsubmit").on("click", function(){
+				$.ajax({
+				  type: "POST",
+				  url: "/users",
+				  data: $("#textcsv").val(),
+				  contentType:"text/csv; charset=utf-8"
+				});
+
+			});
+
+			// Add the following code if you want the name of the file appear on select
+			$(".custom-file-input").on("change", function() {
+				var fileName = $(this).val().split("\\").pop();
+				$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+			});
+		</script>
+    </div>
+
+	<div class="row">
+		<div class="col-md-6 offset-md-1">
+			<button id="getusers" class="btn btn-primary my-2">Get Users JSON</button>
+			<p id="usersjson"></p>
+			<script>
+				// POST for text csv submission
+				$("#getusers").on("click", function(){
+					$.get({
+						url: "/users",
+						success: function(data){
+							$("#usersjson").text(JSON.stringify(data));
+						}
+					});
+				});
+
+			</script>
+			</div>
+	</div>
+
+
+</div>
+</body>
+</html>
